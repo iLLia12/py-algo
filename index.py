@@ -171,3 +171,38 @@ class LRUCache:
             del self.cache[lru.key]
 
 cache = LRUCache(2)
+
+class Solution1:
+    def addBinary(self, a, b):
+        l1 = len(a) - 1
+        l2 = len(b) - 1
+        res = []
+        carry = 0
+        while l1 >= 0 or l2 >= 0 or carry:
+            total = carry
+            if l1 >= 0:
+                total += int(a[l1])
+                l1 -= 1
+            if l2 >= 0:
+                total += int(b[l2])
+                l2 -= 1
+            res.append(str(total % 2))
+            carry = total // 2
+        return "".join(res[::-1])
+
+class Solution:
+    def binaryTreePaths(self, root):
+        def dfs(node, path, paths):
+            if path:
+                path += f"->{str(node.val)}"
+            else:
+                path = str(node.val)
+            if not node.left and not node.right:
+                paths.append(path)
+            if node.left:
+                dfs(node.left, path, paths)
+            if node.right:
+                dfs(node.right, path, paths)
+        paths = []
+        dfs(root, "", paths)
+        return paths
