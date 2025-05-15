@@ -1,0 +1,27 @@
+def getMinConnectionCost(capacity, q):
+    res = []
+    capacityLength = len(capacity)
+    dp = [0] * capacityLength
+    i = capacityLength - 2
+    while i >= 0:
+        dp[i] = capacity[capacityLength - 1] - capacity[i] + dp[i + 1]
+        i -= 1
+    i = 0
+    while i <= len(q) - 1:
+        query = q[i]
+        l = len(query) - 1
+        s = 0
+        right = capacityLength - 1
+        curRes = []
+        while l >= -1:
+            left = query[l] if l >= 0 else 0
+            left -= 1
+            diff = capacity[capacityLength - 1] - capacity[right]
+            rl = right - left - 1
+            diff1 = dp[left + 1] - ((diff * rl) + dp[right])
+            curRes.append(diff1)
+            l -= 1
+            right = left
+        res.append(sum(curRes))
+        i += 1
+    return res
