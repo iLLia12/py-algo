@@ -25,3 +25,13 @@ def getMinConnectionCost(capacity, q):
         res.append(sum(curRes))
         i += 1
     return res
+
+# [8]
+q = [[2,4]]
+warehouseCapacity = [3,6,10,15,20]
+getMinConnectionCost(warehouseCapacity, q)
+
+# [12,18]
+q = [[2,5], [1,3]]
+warehouseCapacity = [0,2,5,9,12,18]
+getMinConnectionCost(warehouseCapacity, q)
