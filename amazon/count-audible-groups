@@ -1,0 +1,33 @@
+from collections import deque
+
+def bfs(graph, start, visited):
+    q = deque([start])
+    while q:
+        node = q.popleft()
+        if node not in visited:
+            visited.add(node)
+            for neighbor, connected in enumerate(graph[node]):
+                if connected and neighbor not in visited:
+                    q.append(neighbor)
+    return visited
+
+
+def countGroups(related):
+    visited = set()
+    groups = 0
+    for node in range(len(related)):
+        if node not in visited:
+            visited = bfs(related, node, visited)
+            groups += 1
+    return groups
+
+
+related = [
+    [1,1,0,0],
+    [1,1,1,0],
+    [0,1,1,0],
+    [0,0,0,1]
+]
+
+
+countGroups(related) # 2
