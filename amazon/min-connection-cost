@@ -35,3 +35,35 @@ getMinConnectionCost(warehouseCapacity, q)
 q = [[2,5], [1,3]]
 warehouseCapacity = [0,2,5,9,12,18]
 getMinConnectionCost(warehouseCapacity, q)
+
+
+class Solution:
+    def roadCost(self, wc, q):
+
+        ans = []
+        l = len(wc)
+        mainHubVal = wc[-1]
+        nearestHubVal = 0
+        wc[l - 2] = wc[-1] - wc[l-2]
+        for i in range(l - 3, -1, -1):
+            wc[i] = (wc[-1] - wc[i]) + wc[i + 1]
+
+        wc[-1] = 0
+        for hubs in q:
+            cost = 0
+            start = 0
+            for hub in hubs:
+                hub -= 1
+                if hub == start:
+                    start += 1
+                    continue
+                countStations = hub - start
+                diff = mainHubVal - (mainHubVal - (wc[hub] - wc[hub + 1]))
+                diff = countStations * diff
+                cost += wc[start] - wc[hub] - diff
+                start = hub + 1
+            if hubs[-1] - 1 < l - 2:
+                cost += wc[hubs[-1]]
+            ans.append(cost)
+
+        return ans
